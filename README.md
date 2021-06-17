@@ -26,6 +26,7 @@ My approach to markup is to do the following:
 3. Parse that HTML and convert it into a data structure closely modelled on that developed by [Substance](https://substance.io). This treats all markup as annotation, including formatting such as **bold** and *italics*. These annotations are attached to the corresponding node (e.g., a paragraph) and record the start and end of the span of text that they apply too. Once the data structure is assembled, we can traverse it and regenerate the input HTML.
 4. In assembling the data structure, once we have processed a paragraph we have removed any markup and are left with just the text, in which we can now look for entities. Each entity found can itself be added as an annotation, which could be stored separately, or embedded in the output HTML.
 
+The goal here is not to faithfully represent the layout of the original document, nor necessarily reflect its logical structure (stray things like headings, page numbers, etc. may be included), but to provide a way to add annotations while still preserving a original markup (e.g., formatting) and also enable annotations to be output in multiple formats.
 
 
 ## Outputting annotations
@@ -72,4 +73,12 @@ To view a local PDF: `http://localhost/~rpage/pdf-markup/pdf.js-hypothes.is/view
 ## Annotation formats
 
 See [Format.html](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/tmTools/Format.html) for a list, including [PubAnnotation](http://pubannotation.org) and BioC.
+
+### PubAnnotation
+
+[PubAnnotation](http://www.pubannotation.org/docs/annotation-format/) looks like a simple format aimed at biomedical entities in PMC, and comes with nice ways to visualise terms and their connections [TextAE](http://textae.pubannotation.org).
+
+### PubTator
+
+[PubTator](https://www.ncbi.nlm.nih.gov/research/pubtator/) is an NLM tool with an attractive interface. It uses the BioC format which treats the document as a series of text blocks.
 
