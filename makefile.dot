@@ -1,0 +1,10 @@
+digraph {
+rankdir=LR;
+ ".pdf" -> ".xml\nPDFXML" [label="pdftoxml/pdftoxml -blocks"];
+ ".xml\nPDFXML" -> ".json" [label="php pdfXmlToJson.php"];
+ ".json" -> ".htm\nSimple HTML" [label="php jsonToHtml.php"];
+ ".json" -> ".html\nHTML with layout" [label="php jsonToHtmlLayout.php"];
+".xml\nPDFXML" -> "images.html" [label="php pdfToImage.php"];
+
+
+}
