@@ -13,6 +13,8 @@ Exploring markup and annotation of PDFs, both born digital and OCR.
 
 There is a `Makefile` that will run these scripts for all PDFs in this folder.
 
+![](https://github.com/rdmpage/pdf-markup/raw/main/makefile.png)
+
 `pdfXmlToJson.php` takes the XML output from `pdftoxml` and converts it a JSON format that describes the tokens and their location on the page. This JSON can then be used to generate other outputs, mostly useful for checking that the PDF extraction has worked as expected. `jsonToHtmlLayout.php` makes a weak attempt to output HTML that is close to the original PDF, `pdfToImages.php` tends to look better by outputting each page as an image and overlaying text on that.
 
 
