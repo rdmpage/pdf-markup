@@ -469,23 +469,22 @@ function to_html($document, $extra = false, $show_italics=true)
 												$html .= '<mark>';
 											}
 											break;
+										
+										case 'geopoint':
+											if ($extra)
+											{
+												$html .= '<span style="background-color:orange">';
+											}
+											break;
 											
-										/*
-		
+										/*		
 										case 'occurrence':
 											if ($extra)
 											{
 												$html .= '<span style="background-color:#99FFFF">';
 											}
 											break;
-		
-										case 'point':
-											if ($extra)
-											{
-												$html .= '<span style="background-color:orange">';
-											}
-											break;
-													
+
 										case 'genbank':
 											if ($extra)
 											{
@@ -493,8 +492,7 @@ function to_html($document, $extra = false, $show_italics=true)
 											}
 											break;
 										*/
-																					
-										
+																														
 										
 										default:
 											break;
@@ -542,15 +540,8 @@ function to_html($document, $extra = false, $show_italics=true)
 											}
 											break;
 
-										/*
-										case 'occurrence':
-											if ($extra)
-											{
-												$html .= '</span>';
-											}
-											break;
-		
-										case 'point':
+										
+										case 'geopoint':
 											if ($extra)
 											{
 												$html .= '</span>';
@@ -561,7 +552,16 @@ function to_html($document, $extra = false, $show_italics=true)
 													$html .= '<a href="http://www.openstreetmap.org/?mlat=' . $document->nodes->{$annotation_id}->feature->geometry->coordinates[1]. '&mlon=' . $document->nodes->{$annotation_id}->feature->geometry->coordinates[0] . '&zoom=8" target="_new">(OSM)</a>';
 												}
 											}										
-											break;										
+											break;	
+																				
+
+										/*
+										case 'occurrence':
+											if ($extra)
+											{
+												$html .= '</span>';
+											}
+											break;
 
 										case 'genbank':
 											if ($extra)

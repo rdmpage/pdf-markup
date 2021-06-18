@@ -5,6 +5,74 @@
 require_once(dirname(__FILE__) . '/core.php');
 require_once(dirname(__FILE__) . '/spatial.php');
 
+
+
+//----------------------------------------------------------------------------------------
+function get($url)
+{
+	$data = null;
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);   
+
+	$response = curl_exec($ch);
+	if($response == FALSE) 
+	{
+		$errorText = curl_error($ch);
+		curl_close($ch);
+		die($errorText);
+	}
+	
+	$info = curl_getinfo($ch);
+	$http_code = $info['http_code'];
+	
+	if ($http_code == 200)
+	{
+		$json = $response;
+		$data = json_decode($json);
+	}
+	
+	return $data;
+}
+
+//----------------------------------------------------------------------------------------
+function markup(&$document)
+{
+	// Preliminaries	
+	$page_num = $document->node_type_counter['page'];
+	
+	$text = $document->current_paragraph_node->content;
+	
+	// Do searches
+	
+	// 1. Geo
+	
+	$url = 'http://localhost/~rpage/pdf-markup/geocode.php?text=' . urlencode($text);
+	
+	$results = get($url);
+	
+	if ($results)
+	{
+		foreach ($results as $hit)
+		{
+			$annotation = new_annotation($document, 'geopoint', false);
+			$annotation->pre 		= $hit->pre;
+			$annotation->mid 		= $hit->mid;
+			$annotation->post 		= $hit->post;
+			$annotation->range 		= $hit->range;
+			$annotation->feature 	= $hit->feature;
+			
+			add_annotation($document, $annotation);	
+		
+		
+		}
+	
+	}
+}
+
+
+/*
 //----------------------------------------------------------------------------------------
 function markup(&$document)
 {
@@ -40,6 +108,8 @@ function markup(&$document)
 				
 		// need to think in terms of global document text position, this is local
 		// to this node
+		
+		// what else do we need to add to be able to export this in other formats?
 
 
 		// annotation as SVG -------------------------------------------------------------
@@ -139,7 +209,7 @@ function markup(&$document)
 		add_annotation($document, $annotation);	
 	}
 }
-
+*/
 
 //----------------------------------------------------------------------------------------
 
