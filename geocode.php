@@ -153,13 +153,17 @@ function find_points($text)
 	$SECONDS_SYMBOL			= '("|\'\'|’’|”|\′\′|\´\´|″)';
 	
 	$INTEGER				= '\d+';
-	$FLOAT					= '\d+(\.\d+)?';
+	$FLOAT					= '\d+([\.|,]\d+)?';
 	
 	$LATITUDE_DEGREES 		= '[0-9]{1,2}';
 	$LONGITUDE_DEGREES 		= '[0-9]{1,3}';
 	
 	$LATITUDE_HEMISPHERE 	= '[N|S]';
 	$LONGITUDE_HEMISPHERE 	= '[W|E]';
+	
+	$ES_LATITUDE_HEMISPHERE 	= '[N|S]';
+	$ES_LONGITUDE_HEMISPHERE 	= '[O|E]';
+	
 	
 	$flanking_length = 50;
 	
@@ -403,6 +407,72 @@ function find_points($text)
 	}
 	
 	
+	// Spanish https://doi.org/10.21068/c2018.v19s1a11
+	// 4°19´44”N y 71°43´54.1”O
+	if (preg_match_all("/
+		(?<latitude_degrees>$LATITUDE_DEGREES)
+		$DEGREES_SYMBOL
+		(?<latitude_minutes>$INTEGER)
+		$MINUTES_SYMBOL
+		\s*
+		(
+		(?<latitude_seconds>$FLOAT)
+		$SECONDS_SYMBOL
+		)?
+		\s*
+		(?<latitude_hemisphere>$ES_LATITUDE_HEMISPHERE)		
+		\s+y\s+
+		(?<longitude_degrees>$LONGITUDE_DEGREES)
+		$DEGREES_SYMBOL		
+		(?<longitude_minutes>$INTEGER)
+		$MINUTES_SYMBOL
+		\s*
+		(
+		(?<longitude_seconds>$FLOAT)
+		$SECONDS_SYMBOL
+		)?		
+		\s*
+		(?<longitude_hemisphere>$ES_LONGITUDE_HEMISPHERE)
+	/xu",  $text, $matches, PREG_SET_ORDER))
+	{
+		//print_r($matches);
+		
+		$last_pos = 0;
+		
+		foreach ($matches as $match)
+		{
+			$hit = new stdclass;
+			$hit->text = $text;
+			$hit->type = 'geopoint';
+			
+			// verbatim text we have matched
+			$hit->mid = $match[0];
+			
+			$start = mb_strpos($text, $hit->mid, $last_pos, mb_detect_encoding($text));
+			$end = $start + mb_strlen($hit->mid, mb_detect_encoding($hit->mid)) - 1;
+			
+			// update position so we don't find this point again
+			$last_pos = $end;
+			
+			$hit->range = array($start, $end);
+			
+			$pre_length = min($start, $flanking_length);
+			$pre_start = $start - $pre_length;
+			
+			$hit->pre = mb_substr($text, $pre_start, $pre_length, mb_detect_encoding($text)); 
+			
+
+			$post_length = 	min(mb_strlen($text, mb_detect_encoding($text)) - $end, $flanking_length);		
+			
+			$hit->post = mb_substr($text, $end + 1, $post_length, mb_detect_encoding($text)); 
+			
+			$hit->feature = toPoint($match);
+			
+			$results[] = $hit;
+		}
+	}	
+	
+	
 	return $results;
 }
 
@@ -414,6 +484,7 @@ if ($text)
 {
 	$results = find_points($text);
 	
+	header("Content-type: text/plain");
 	echo json_encode($results, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
 }
