@@ -7,7 +7,7 @@ XMLFILES    := $(PDFFILES:.pdf=.xml)
 JSONFILES   := $(XMLFILES:.xml=.json)
 HTMFILES    := $(JSONFILES:.json=.htm)
 HTMLFILES   := $(JSONFILES:.json=.html)
-IMAGEFILES  := $(PDFFILES:.pdf=.images.html)
+#IMAGEFILES  := $(PDFFILES:.pdf=.images.html)
 OBJFILES	:= $(XMLFILES) $(JSONFILES) $(HTMFILES) $(HTMLFILES) $(IMAGEFILES)
 
 .PHONY: all
@@ -25,8 +25,8 @@ $(HTMFILES): %.htm: %.json
 $(HTMLFILES): %.html: %.json
 	php jsonToHtmlLayout.php $<		
 
-$(IMAGEFILES): %.images.html: %.pdf
-	php pdfToImages.php $<		
+#$(IMAGEFILES): %.images.html: %.pdf
+#	php pdfToImages.php $<		
 
 clean:
 	rm -f *.htm
