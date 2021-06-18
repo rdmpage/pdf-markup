@@ -37,6 +37,78 @@ function get($url)
 }
 
 //----------------------------------------------------------------------------------------
+// Annotation as a highlight 
+// This is a bit of a nightmare. PDF documentation is hard to find, and inconsistent.
+// We can add annotations as pdfmarks using GhostScript.
+// The annotations need to use the PDF coordinate system, where the origin (0,0)
+// is bottom left, whereas the origin for PDFXML, HTML, and SVG is top left is (0,0).
+// Locations for annotations ar defined by QuadPoints,
+function annotation_pdfmark($document, &$annotation)
+{
+	// get tokens for this text block
+	$data = json_decode($document->current_paragraph_node->data);
+	
+	$page_num = $document->node_type_counter['page'];
+	
+	// match tokens to text spanned by annotation
+	$tokens = array();
+	for ($j = $annotation->range[0]; $j <= $annotation->range[1]; $j++)
+	{
+		$tokens[] = $data->text_to_blocks[$j];
+	}
+	$tokens = array_unique($tokens);
+	
+	// page dimensions
+	$display_width 	= $data->page_width;
+	$display_height = $data->page_height;
+	
+	// PDF
+	$quadPoints = array();
+	
+	$pdfRect = new BBox(0,0,0,0);
+	
+	// PDF style	
+	foreach ($tokens as $t)
+	{
+		$tokenPdfRect = new BBox(
+			$data->xywh[$t]->x,				
+			1 - ($data->xywh[$t]->y + $data->xywh[$t]->h),
+			$data->xywh[$t]->x + $data->xywh[$t]->w,
+			1 - $data->xywh[$t]->y
+			);
+		
+		$pdfRect->merge($tokenPdfRect);
+
+		$v = $tokenPdfRect->toQuadPoints(1/$display_width, 1/$display_height);
+	
+		$quadPoints = array_merge($quadPoints, $v);
+		
+	}
+	$pdf = "[\n";
+	$pdf .= "/SrcPg " . $page_num  . "\n"; // how do we know this?
+	
+	// Bounding rectangle
+	$minx = $pdfRect->minx * $display_width;
+	$maxx = $pdfRect->maxx * $display_width;
+	$miny = $pdfRect->miny * $display_height;
+	$maxy = $pdfRect->maxy * $display_height;
+	$pdf .= "/Rect[$minx $miny $maxx $maxy]\n";
+	
+	$pdf .= "/Type /Annot\n";
+	$pdf .= "/Subtype /Highlight\n";
+	$pdf .= "/Color [1 1 0]\n";
+	$pdf .= "/F 4\n";
+	$pdf .=  "/QuadPoints [" . join(' ', $quadPoints) . "]\n";
+	$pdf .= "/ANN pdfmark\n";
+	
+	//echo $pdf . "\n";
+	
+	$annotation->pdfmark = $pdf;
+}
+
+
+
+//----------------------------------------------------------------------------------------
 function markup(&$document)
 {
 	// Preliminaries	
@@ -46,7 +118,7 @@ function markup(&$document)
 	
 	// Do searches
 	
-	// 1. Geo
+	// 1. Geocoding
 	
 	$url = 'http://localhost/~rpage/pdf-markup/geocode.php?text=' . urlencode($text);
 	
@@ -69,6 +141,38 @@ function markup(&$document)
 		}
 	
 	}
+	
+	// 2. Entities
+	
+	$url = 'http://localhost/~rpage/pdf-markup/highlight.php?text=' . urlencode($text);
+	
+	$results = get($url);
+	
+	if ($results)
+	{
+		foreach ($results as $hit)
+		{
+			$annotation = new_annotation($document, 'highlight', false);
+			if (isset($hit->pre))
+			{
+				$annotation->pre = $hit->pre;
+			}
+			$annotation->mid = $hit->mid;
+			if (isset($hit->post))
+			{
+				$annotation->post= $hit->post;
+			}
+			$annotation->range = $hit->range;
+			
+			
+			annotation_pdfmark($document, $annotation);
+			
+			add_annotation($document, $annotation);	
+		}
+	
+	}
+	
+	
 }
 
 
@@ -264,7 +368,7 @@ if (0)
 	echo '</pre>';
 }
 
-if (1)
+if (0)
 {
 	// Dump list of annotations
 	//echo '<h1>Annotations</h1>';
@@ -273,7 +377,7 @@ if (1)
 	foreach ($document->nodes as $node)
 	{
 
-		// point location
+		// highlight
 		if ($node->type == 'highlight')
 		{
 			/*
@@ -284,7 +388,10 @@ if (1)
 			echo '</pre></li>';
 			*/
 			
-			echo $node->pdfmark . "\n";
+			if (isset($node->pdfmark))
+			{
+				echo $node->pdfmark . "\n";
+			}
 		
 		}
 
@@ -293,6 +400,31 @@ if (1)
 	//echo '</ul>';
 
 }
+
+if (1)
+{
+	// Dump list of points
+	
+	$geojson = new stdclass;
+	$geojson->type = 'MultiPoint';
+	$geojson->coordinates = array();
+	
+	foreach ($document->nodes as $node)
+	{
+		// highlight
+		if ($node->type == 'geopoint')
+		{
+			if (isset($node->feature))
+			{
+				$geojson->coordinates[] = $node->feature->geometry->coordinates;
+			}
+		}
+	}
+	
+	echo json_encode($geojson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+}
+
 
 ?>
 
