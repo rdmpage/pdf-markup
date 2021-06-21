@@ -30,7 +30,7 @@ $(HTMLFILES): %.html: %.json
 
 clean:
 	rm -f *.htm
-	rm -f *.html
+	#rm -f *.html
 	rm -f *.shtml
 	rm -f *.images.html		
 	rm -f *.json
