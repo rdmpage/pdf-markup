@@ -20,9 +20,6 @@ else
 }
 
 
-
-// $segments = array();
-
 $obj = new stdclass;
 
 $obj = new stdclass;
@@ -100,7 +97,8 @@ foreach($pages as $xml_page)
 
 	// text from born native PDF ---------------------------------------------------------
 	
-	// Get blocks	
+	// Get blocks using PDFXML structure, note that we ignore lines as we want blocks 
+	// of text to process to find entities	
 	$line_counter = 0; // global line counter
 	$blocks = $xpath->query ('BLOCK', $xml_page);
 	foreach($blocks as $block)
@@ -188,13 +186,14 @@ foreach($pages as $xml_page)
 			
 		}
 		
-		$page->text_bbox->merge($b->bbox);	
+		// Grow the page bounding box
+		$page->text_bbox->merge($b->bbox);
+		
+		// Get text for this block and cleanup
 		$b->text = join(' ', $b->text_strings);
 		unset($b->text_strings);
 		
-		
-		// $segments[] = $b->text;
-		
+		// Add block to this page
 		$page->blocks[] = $b;
 	}
 	
@@ -205,7 +204,6 @@ foreach($pages as $xml_page)
 
 //print_r($obj);
 
-// print_r($segments);
 
 file_put_contents($output_filename, json_encode($obj, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 
