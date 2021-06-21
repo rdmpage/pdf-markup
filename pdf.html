@@ -1,0 +1,94 @@
+<html>
+<head>
+	<style>
+		body
+		{
+			padding: 0px;
+			margin: 0px;
+			font-family: "Arial Narrow", Arial, sans-serif;			
+			/* stop any scrolling of whole browser contents */
+			overflow: hidden;
+		}	
+		
+		.header
+		{
+			height: 2em;
+			line-height: 2em;
+			background-color:rgb(64,64,64);
+			color:white; 
+		}
+		
+		.content
+		{
+			display: flex;
+			flex: 1;
+		}		
+		
+		.side
+		{
+			height: calc(100vh - 2em);
+			/* have a scrollbar */
+			overflow-y: auto;
+			flex: 1 0 0;
+			background-color:white;
+			
+			padding:10px;
+		}	
+		
+		.main
+		{
+			height: calc(100vh - 2em);
+			min-width:300px;
+			flex: 2 0 0;
+			background-color:#404040;
+		}			
+
+		.frame {
+			height: calc(100vh - 2em);
+			width:100%;
+			border:0;
+		}
+	
+	</style>
+	
+	<script type="text/javascript">
+		// message from PDF.js
+		window.addEventListener("message", receiveMessage, false);
+
+		function receiveMessage(event)
+		{
+			console.log("receiveMessage" + JSON.stringify(event));
+			if (typeof event.data === "number") {
+				document.getElementById('info').innerHTML = "Display info for page " + event.data;
+			}
+		}  
+	</script>
+	  	
+</head>
+<body>
+
+
+	<div class="header">
+		This is the Header
+	</div>
+
+	<div class="content">
+	
+		<div class="main">
+			<iframe class="frame" id="pdf" src="pdfjs/web/viewer.html?file=..%2F..%2Fzt01956p080.pdf"></iframe>
+			<!-- <iframe class="frame" id="pdf" src="pdfjs/web/viewer.html?file=..%2F..%2Fbiostor-266209.pdf"></iframe> -->
+
+
+		</div>	
+
+		<div class="side">
+			<div id="info"></div>	
+		</div>
+
+
+	
+	</div>
+
+
+</body>
+</html>
