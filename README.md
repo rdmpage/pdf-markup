@@ -68,6 +68,25 @@ gs -sDEVICE=pdfwrite -sOutputFile=output.pdf -dPDFSETTINGS=/prepress -dNOPAUSE -
 The `-dNOPAUSE -dBATCH` flags mean the command runs entire in batch mode, otherwise the user is prompted to process each page.
 
 
+## PDF.JS
+
+The version in this repository has a tweak to the `viewer.html` file:
+
+```
+<script type="text/javascript">
+  document.addEventListener("pagechange", function(e) {
+  	window.parent.postMessage(e.pageNumber, "*");
+  });
+</script>
+```
+
+This means we send `pagechange` messages to the document element. We can add a listener to the main document to respond to page changes. Hence we can have a simple PDF viewer with a sidebar where we could display annotations.
+
+## Viewing a single page with pdf.js
+
+Using version 1.4.20 build b15f335 of `pdf.js` I’m experimenting with code to render a single PDF page. This could be used, for example, to display a BHL page that has a taxonomic name. If a highlight annotation is available in SVG we can render that on top of the PDF page, so we have an annotation without modifying the PDF. Although this looses context (the BHL page is isolated from its original item) it makes it simple to display a BHL page with an annotation.
+
+
 
 ## Hypothes.is
 
