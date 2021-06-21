@@ -13,11 +13,73 @@
 		<string>71200392-E654-412C-B8E2-84DC19462A29</string>
 		<string>0FDA81FD-2841-4F7F-823B-3EDEB8B77C97</string>
 		<string>D68ACB6B-7453-40F4-A57A-5417FDE4B3F2</string>
+		<string>FFDCA99E-E895-40D9-A1A8-91273DAD38FC</string>
+		<string>7040D2FB-270B-49A6-8F78-FF12E811224F</string>
 		<string>10E25858-F2AD-4D4F-8A01-F627362585A5</string>
 		<string>A10D8B70-BD83-42DD-B594-70DE5739A411</string>
+		<dict>
+			<key>CollectionID</key>
+			<string>401F5A80-AA54-4D5C-86B8-83BFBDCD7C9D</string>
+			<key>CollectionItems</key>
+			<array>
+				<string>064696B1-EB1C-4665-96BD-F50A15A93EFD</string>
+				<string>A004D930-1AE4-484B-80B2-0876F3C66302</string>
+			</array>
+		</dict>
+		<string>49CCF1CF-F0A9-4CD1-987B-2EFFE72EDFD8</string>
 	</array>
 	<key>ProjectItems</key>
 	<dict>
+		<key>064696B1-EB1C-4665-96BD-F50A15A93EFD</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayQDAAAAAAQQMAAAAD+iKqALoMId19g2eZZM+LB7
+				PkuE3A7NWXtT9E5mNd25FAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAAoAAAABAQAAcGRmLW1hcmt1cAAA
+				DQAAAAEBAABoaWdobGlnaHQucGhwAAAAFAAAAAEGAAAQ
+				AAAAIAAAADAAAABAAAAAVAAAAAgAAAAEAwAAEGcCAAAA
+				AAAIAAAABAMAAIV0DQAAAAAACAAAAAQDAAAEVkwAAAAA
+				AAgAAAAEAwAAOu0dBwMAAAAIAAAABAMAAES5HwcDAAAA
+				FAAAAAEGAACIAAAAmAAAAKgAAAC4AAAAyAAAAAgAAAAA
+				BAAAQcM+Vxz1tpYYAAAAAQIAAAEAAAAAAAAADwAAAAAA
+				AAAAAAAAAAAAAAgAAAAEAwAAAwAAAAAAAAAEAAAAAwMA
+				APUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNp
+				bnRvc2ggSEQIAAAABAMAAADgBANpAAAACAAAAAAEAABB
+				vt1dYgAAACQAAAABAQAAMjVFNDI4NkQtNzEyQy0zODk5
+				LUI0M0YtNUQzRjZBOEJEMTIxGAAAAAECAACBAAAAAQAA
+				AO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAAAAAA
+				AQUAABoAAAABAQAATlNVUkxEb2N1bWVudElkZW50aWZp
+				ZXJLZXkAAAQAAAADAwAAMKUBANgAAAD+////AQAAAAAA
+				AAARAAAABBAAAGwAAAAAAAAABRAAANgAAAAAAAAAEBAA
+				AAQBAAAAAAAAQBAAAPQAAAAAAAAAAiAAANABAAAAAAAA
+				BSAAAEABAAAAAAAAECAAAFABAAAAAAAAESAAAIQBAAAA
+				AAAAEiAAAGQBAAAAAAAAEyAAAHQBAAAAAAAAICAAALAB
+				AAAAAAAAMCAAANwBAAAAAAAAAcAAACQBAAAAAAAAEcAA
+				ACAAAAAAAAAAEsAAADQBAAAAAAAAENAAAAQAAAAAAAAA
+				5AEAgAgCAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/pdf-markup/highlight.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./highlight.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>highlight.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>0FDA81FD-2841-4F7F-823B-3EDEB8B77C97</key>
 		<dict>
 			<key>ItemData</key>
@@ -262,6 +324,63 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>401F5A80-AA54-4D5C-86B8-83BFBDCD7C9D</key>
+		<dict>
+			<key>ItemData</key>
+			<array/>
+			<key>ItemName</key>
+			<string>Services</string>
+			<key>ItemType</key>
+			<string>StaticCollection</string>
+		</dict>
+		<key>49CCF1CF-F0A9-4CD1-987B-2EFFE72EDFD8</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va9wCAAAAAAQQMAAAAOoYEFYJ5KtQhm0Ty2NS+0n5
+				e0GtxdsMQwUvpAOz/DIO2AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAAoAAAABAQAAcGRmLW1hcmt1cAAA
+				AwAAAAEBAAB4c2wAFAAAAAEGAAAQAAAAIAAAADAAAABA
+				AAAAVAAAAAgAAAAEAwAAEGcCAAAAAAAIAAAABAMAAIV0
+				DQAAAAAACAAAAAQDAAAEVkwAAAAAAAgAAAAEAwAAOu0d
+				BwMAAAAIAAAABAMAAAQwHgcDAAAAFAAAAAEGAAB8AAAA
+				jAAAAJwAAACsAAAAvAAAAAgAAAAABAAAQcM90WmYQ0kY
+				AAAAAQIAAAIAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAgA
+				AAAEAwAAAwAAAAAAAAAEAAAAAwMAAPUBAAAIAAAAAQkA
+				AGZpbGU6Ly8vDAAAAAEBAABNYWNpbnRvc2ggSEQIAAAA
+				BAMAAADgBANpAAAACAAAAAAEAABBvt1dYgAAACQAAAAB
+				AQAAMjVFNDI4NkQtNzEyQy0zODk5LUI0M0YtNUQzRjZB
+				OEJEMTIxGAAAAAECAACBAAAAAQAAAO8TAAABAAAAAAAA
+				AAAAAAABAAAAAQEAAC8AAAAAAAAAAQUAAMwAAAD+////
+				AQAAAAAAAAAQAAAABBAAAGAAAAAAAAAABRAAAMwAAAAA
+				AAAAEBAAAPgAAAAAAAAAQBAAAOgAAAAAAAAAAiAAAMQB
+				AAAAAAAABSAAADQBAAAAAAAAECAAAEQBAAAAAAAAESAA
+				AHgBAAAAAAAAEiAAAFgBAAAAAAAAEyAAAGgBAAAAAAAA
+				ICAAAKQBAAAAAAAAMCAAANABAAAAAAAAAcAAABgBAAAA
+				AAAAEcAAACAAAAAAAAAAEsAAACgBAAAAAAAAENAAAAQA
+				AAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/pdf-markup/xsl/</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./xsl</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>xsl</string>
+			<key>ItemType</key>
+			<string>FolderReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>4A7AB6C7-4B00-4C8D-B023-A8A29FBDDA77</key>
 		<dict>
 			<key>ItemData</key>
@@ -357,6 +476,52 @@
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
 			<true/>
+		</dict>
+		<key>7040D2FB-270B-49A6-8F78-FF12E811224F</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va+ACAAAAAAQQMAAAAKbWchIAiR88oaatNz/4k/8t
+				thPwnceawtI8+SpxeWHd3AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAAoAAAABAQAAcGRmLW1hcmt1cAAA
+				CAAAAAEBAABwZGYuaHRtbBQAAAABBgAAEAAAACAAAAAw
+				AAAAQAAAAFQAAAAIAAAABAMAABBnAgAAAAAACAAAAAQD
+				AACFdA0AAAAAAAgAAAAEAwAABFZMAAAAAAAIAAAABAMA
+				ADrtHQcDAAAACAAAAAQDAAAT/SIHAwAAABQAAAABBgAA
+				gAAAAJAAAACgAAAAsAAAAMAAAAAIAAAAAAQAAEHDQFVt
+				BfBKGAAAAAECAAABAAAAAAAAAA8AAAAAAAAAAAAAAAAA
+				AAAIAAAABAMAAAMAAAAAAAAABAAAAAMDAAD1AQAACAAA
+				AAEJAABmaWxlOi8vLwwAAAABAQAATWFjaW50b3NoIEhE
+				CAAAAAQDAAAA4AQDaQAAAAgAAAAABAAAQb7dXWIAAAAk
+				AAAAAQEAADI1RTQyODZELTcxMkMtMzg5OS1CNDNGLTVE
+				M0Y2QThCRDEyMRgAAAABAgAAgQAAAAEAAADvEwAAAQAA
+				AAAAAAAAAAAAAQAAAAEBAAAvAAAAAAAAAAEFAADMAAAA
+				/v///wEAAAAAAAAAEAAAAAQQAABkAAAAAAAAAAUQAADQ
+				AAAAAAAAABAQAAD8AAAAAAAAAEAQAADsAAAAAAAAAAIg
+				AADIAQAAAAAAAAUgAAA4AQAAAAAAABAgAABIAQAAAAAA
+				ABEgAAB8AQAAAAAAABIgAABcAQAAAAAAABMgAABsAQAA
+				AAAAACAgAACoAQAAAAAAADAgAADUAQAAAAAAAAHAAAAc
+				AQAAAAAAABHAAAAgAAAAAAAAABLAAAAsAQAAAAAAABDQ
+				AAAEAAAAAAAAAA==
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/pdf-markup/pdf.html</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./pdf.html</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>pdf.html</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
 		</dict>
 		<key>71200392-E654-412C-B8E2-84DC19462A29</key>
 		<dict>
@@ -454,6 +619,56 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>A004D930-1AE4-484B-80B2-0876F3C66302</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayADAAAAAAQQMAAAAKlhQNDCDRP3IZsZhgonjRUW
+				kKCNpLneIm8e4YCAxUb4EAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAAoAAAABAQAAcGRmLW1hcmt1cAAA
+				CwAAAAEBAABnZW9jb2RlLnBocAAUAAAAAQYAABAAAAAg
+				AAAAMAAAAEAAAABUAAAACAAAAAQDAAAQZwIAAAAAAAgA
+				AAAEAwAAhXQNAAAAAAAIAAAABAMAAARWTAAAAAAACAAA
+				AAQDAAA67R0HAwAAAAgAAAAEAwAA3lQfBwMAAAAUAAAA
+				AQYAAIQAAACUAAAApAAAALQAAADEAAAACAAAAAAEAABB
+				wz5XHPW2lhgAAAABAgAAAQAAAAAAAAAPAAAAAAAAAAAA
+				AAAAAAAACAAAAAQDAAADAAAAAAAAAAQAAAADAwAA9QEA
+				AAgAAAABCQAAZmlsZTovLy8MAAAAAQEAAE1hY2ludG9z
+				aCBIRAgAAAAEAwAAAOAEA2kAAAAIAAAAAAQAAEG+3V1i
+				AAAAJAAAAAEBAAAyNUU0Mjg2RC03MTJDLTM4OTktQjQz
+				Ri01RDNGNkE4QkQxMjEYAAAAAQIAAIEAAAABAAAA7xMA
+				AAEAAAAAAAAAAAAAAAEAAAABAQAALwAAAAAAAAABBQAA
+				GgAAAAEBAABOU1VSTERvY3VtZW50SWRlbnRpZmllcktl
+				eQAABAAAAAMDAAAspQEA2AAAAP7///8BAAAAAAAAABEA
+				AAAEEAAAaAAAAAAAAAAFEAAA1AAAAAAAAAAQEAAAAAEA
+				AAAAAABAEAAA8AAAAAAAAAACIAAAzAEAAAAAAAAFIAAA
+				PAEAAAAAAAAQIAAATAEAAAAAAAARIAAAgAEAAAAAAAAS
+				IAAAYAEAAAAAAAATIAAAcAEAAAAAAAAgIAAArAEAAAAA
+				AAAwIAAA2AEAAAAAAAABwAAAIAEAAAAAAAARwAAAIAAA
+				AAAAAAASwAAAMAEAAAAAAAAQ0AAABAAAAAAAAADgAQCA
+				BAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/pdf-markup/geocode.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./geocode.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>geocode.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>A10D8B70-BD83-42DD-B594-70DE5739A411</key>
 		<dict>
 			<key>ItemData</key>
@@ -545,6 +760,56 @@
 			</dict>
 			<key>ItemName</key>
 			<string>pdfXmlToJson.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>FFDCA99E-E895-40D9-A1A8-91273DAD38FC</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayADAAAAAAQQMAAAAFmTkp/ESldfAMbd6yrZcFk5
+				usOtrGT6kWvyiLJxGsGNEAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAAAoAAAABAQAAcGRmLW1hcmt1cAAA
+				DAAAAAEBAABvbmVwYWdlLmh0bWwUAAAAAQYAABAAAAAg
+				AAAAMAAAAEAAAABUAAAACAAAAAQDAAAQZwIAAAAAAAgA
+				AAAEAwAAhXQNAAAAAAAIAAAABAMAAARWTAAAAAAACAAA
+				AAQDAAA67R0HAwAAAAgAAAAEAwAA+vgiBwMAAAAUAAAA
+				AQYAAIQAAACUAAAApAAAALQAAADEAAAACAAAAAAEAABB
+				wOE8XTZnvxgAAAABAgAAAQAAAAAAAAAPAAAAAAAAAAAA
+				AAAAAAAACAAAAAQDAAADAAAAAAAAAAQAAAADAwAA9QEA
+				AAgAAAABCQAAZmlsZTovLy8MAAAAAQEAAE1hY2ludG9z
+				aCBIRAgAAAAEAwAAAOAEA2kAAAAIAAAAAAQAAEG+3V1i
+				AAAAJAAAAAEBAAAyNUU0Mjg2RC03MTJDLTM4OTktQjQz
+				Ri01RDNGNkE4QkQxMjEYAAAAAQIAAIEAAAABAAAA7xMA
+				AAEAAAAAAAAAAAAAAAEAAAABAQAALwAAAAAAAAABBQAA
+				GgAAAAEBAABOU1VSTERvY3VtZW50SWRlbnRpZmllcktl
+				eQAABAAAAAMDAABJpQEA2AAAAP7///8BAAAAAAAAABEA
+				AAAEEAAAaAAAAAAAAAAFEAAA1AAAAAAAAAAQEAAAAAEA
+				AAAAAABAEAAA8AAAAAAAAAACIAAAzAEAAAAAAAAFIAAA
+				PAEAAAAAAAAQIAAATAEAAAAAAAARIAAAgAEAAAAAAAAS
+				IAAAYAEAAAAAAAATIAAAcAEAAAAAAAAgIAAArAEAAAAA
+				AAAwIAAA2AEAAAAAAAABwAAAIAEAAAAAAAARwAAAIAAA
+				AAAAAAASwAAAMAEAAAAAAAAQ0AAABAAAAAAAAADgAQCA
+				BAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/pdf-markup/onepage.html</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./onepage.html</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>onepage.html</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
