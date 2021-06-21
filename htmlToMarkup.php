@@ -42,7 +42,7 @@ function get($url)
 // We can add annotations as pdfmarks using GhostScript.
 // The annotations need to use the PDF coordinate system, where the origin (0,0)
 // is bottom left, whereas the origin for PDFXML, HTML, and SVG is top left is (0,0).
-// Locations for annotations ar defined by QuadPoints,
+// Locations for annotations are defined by QuadPoints,
 function annotation_pdfmark($document, &$annotation)
 {
 	// get tokens for this text block
@@ -106,6 +106,41 @@ function annotation_pdfmark($document, &$annotation)
 	$annotation->pdfmark = $pdf;
 }
 
+//----------------------------------------------------------------------------------------
+// Annotation as a highlight in SVG 
+function annotation_svg($document, &$annotation)
+{
+	// get tokens for this text block
+	$data = json_decode($document->current_paragraph_node->data);
+	
+	$page_num = $document->node_type_counter['page'];
+	
+	// match tokens to text spanned by annotation
+	$tokens = array();
+	for ($j = $annotation->range[0]; $j <= $annotation->range[1]; $j++)
+	{
+		$tokens[] = $data->text_to_blocks[$j];
+	}
+	$tokens = array_unique($tokens);
+	
+	// page dimensions
+	$display_width 	= $data->page_width;
+	$display_height = $data->page_height;
+	
+	// Set viewbox to be page dimensions
+	$svg = '<svg viewBox="0 0 ' . $display_width. ' ' . $display_height . '">' . "\n"; 
+	foreach ($tokens as $t)
+	{
+		// annotation as a series of rects, note that token positions are normalised 0-1
+		// so we need to multiply by page dimensions
+		$svg .= '<rect x="' . round($display_width * $data->xywh[$t]->x) . '" y="' . round($display_height * $data->xywh[$t]->y) . '" width="' . round($display_width * $data->xywh[$t]->w) . '" height ="' . round($display_height * $data->xywh[$t]->h) . '" />' . "\n";
+	}
+	$svg .= '</svg>' . "\n";
+
+	
+	$annotation->svg = $svg;
+}
+
 
 
 //----------------------------------------------------------------------------------------
@@ -153,6 +188,8 @@ function markup(&$document)
 		foreach ($results as $hit)
 		{
 			$annotation = new_annotation($document, 'highlight', false);
+			
+			// text locators
 			if (isset($hit->pre))
 			{
 				$annotation->pre = $hit->pre;
@@ -162,9 +199,16 @@ function markup(&$document)
 			{
 				$annotation->post= $hit->post;
 			}
+			
+			// local range
 			$annotation->range = $hit->range;
 			
+			// to do: global range
 			
+			// SVG
+			annotation_svg($document, $annotation);
+			
+			// PDF
 			annotation_pdfmark($document, $annotation);
 			
 			add_annotation($document, $annotation);	
@@ -401,7 +445,7 @@ if (0)
 
 }
 
-if (1)
+if (0)
 {
 	// Dump list of points
 	
@@ -422,6 +466,25 @@ if (1)
 	}
 	
 	echo json_encode($geojson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+}
+
+if (1)
+{
+	// Dump list of SVG
+	foreach ($document->nodes as $node)
+	{
+		// highlight
+		if ($node->type == 'highlight')
+		{
+			print_r($node);
+			
+			if (isset($node->svg))
+			{
+				echo $node->svg . "\n";
+			}
+		}
+	}
 
 }
 
