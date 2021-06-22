@@ -1,0 +1,103 @@
+<html>
+<head>
+    <style>
+    	body {
+    	background-color:rgb(224,224,224);
+    	}
+    
+    
+    	.page {
+    		top:0px;
+    		left:0px;
+    		padding:0px;
+    		margin:0px;
+    		
+    		position:relative;
+    	}
+    	.svgLayer {
+    		position:absolute;
+    		top:0px;
+    		left:0px;
+    		padding:0px;
+    		margin:0px;
+    	}
+    	
+    	img {
+    		padding:0px;
+    		margin:0px;
+    		/* border:1px solid black; */
+    	}
+    	
+    	rect {
+    		fill:yellow;
+    		opacity:0.5;
+    	}
+    </style>
+</head>
+<body>
+	<p>Testbed for having SVG annotation for a highlight for a BHL page, and drawing that 
+	over the page image.</p>
+
+
+	<div id="page" class="page"></div>
+
+	<script>
+	var height = 600;
+	
+	// Add BHL page image
+	var img = document.createElement("img");
+	img.setAttribute("src", "https://aipbvczbup.cloudimg.io/s/height/1000/https://www.biodiversitylibrary.org/pagethumb/55630927,1000,1000" );
+		
+	var div = document.getElementById('page');
+		
+		
+	img.style.width = height + "px";
+	div.appendChild(img);	
+	
+	var svgStrings = [];
+	
+	
+	svgStrings.push(`<svg viewBox="0 0 595.276 841.89">
+<rect x="248" y="367" width="57" height ="15" />
+</svg>`);
+
+
+	var svg_width = 0;
+	var svg_height = 0;
+	
+
+	for (var i in svgStrings) {
+	
+		// To ensure SVG fits image we need to get SVG dimensions and 
+		// scale image. Do this once as all SVG annotation swill be the same size
+		if (svg_width == 0) {
+			// Parse annotation SVG into DOM
+			var parser = new DOMParser();						
+			var svg = parser.parseFromString(svgStrings[i], "image/svg+xml");
+	
+			var viewBox = svg.firstChild.getAttribute("viewBox");
+			var parts = viewBox.split(" ");
+	
+			svg_width 	= parts[2];
+			svg_height 	= parts[3];
+			
+			// scale image
+			img.style.width = svg_width + "px";
+			img.style.height = svg_height + "px";
+			
+		}
+		
+		var svgDiv = document.createElement("div");
+        svgDiv.setAttribute("class", "svgLayer");
+        
+		svgDiv.style.width = svg_width + "px";
+		svgDiv.style.height = svg_height + "px";
+        svgDiv.innerHTML = svgStrings[i];				
+		div.appendChild(svgDiv);
+	}
+       
+		
+	</script>
+</body>
+</html>	
+						
