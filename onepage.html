@@ -4,6 +4,10 @@
     <title>One Page</title>
     
     <style>
+    	body {
+    	background-color:rgb(224,224,224);
+    	}
+
     	.svgLayer {
     		position:absolute;
     		top:0px;
@@ -20,7 +24,7 @@
     
     
   </head>
-  <body style="background-color:rgb(224,224,224)">
+  <body>
     <link type="text/css" href="pdfjs/web/text_layer_builder.css" rel="stylesheet"/>
     <link type="text/css" href="pdfjs/web/annotation_layer_builder.css" rel="stylesheet"/>
     <script type="text/javascript" src="pdfjs/web/text_layer_builder.js"></script>
@@ -33,6 +37,7 @@
         // URL of PDF document
         var url = "http://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf";
         url = "35150450.pdf";
+        url = "10.pdf";
         //url = "13955733.pdf";
 
         // Asynchronous download PDF
@@ -150,6 +155,20 @@ svgString = `<svg viewBox="0 0 2378 3415">
 </svg>`;
 */
 
+svgString = `<svg viewBox="0 0 595.276 841.89">
+<rect x="71" y="467" width="57" height ="15" />
+</svg>`;
+
+svgString = `<svg viewBox="0 0 595.276 841.89">
+<rect x="71" y="424" width="57" height ="15" />
+</svg>`;
+
+// [660,813,992,1018]
+// box[minx, maxx, miny, maxy]
+
+svgString = `<svg viewBox="0 0 595.276 841.89">
+<rect x="248" y="367" width="57" height ="15" />
+</svg>`;
 						if (0)
 						{
 							// Parse into DOM
@@ -173,6 +192,7 @@ svgString = `<svg viewBox="0 0 2378 3415">
         });
 
     </script>
+    <p>Testbed for rendering a one-page PDF using pdf.js together with and SVG annotation.</p>
     <div id="container"></div>
   </body>
 </html>
