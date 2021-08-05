@@ -167,7 +167,7 @@ function create_page_node(&$document)
 
 //--------------------------------------------------------------------------------------------------
 // Recursively traverse DOM and process tags
-function dive($node, &$document, $callback_func = null )
+function dive($node, &$document, $callback_func = null, $callback_parameters = null )
 {
 	switch ($node->nodeName)
 	{
@@ -344,7 +344,7 @@ function dive($node, &$document, $callback_func = null )
 	if ($node->hasChildNodes())
 	{
 		foreach ($node->childNodes as $children) {
-			dive($children, $document, $callback_func);
+			dive($children, $document, $callback_func, $callback_parameters);
 		}
 	}
 	
@@ -383,7 +383,7 @@ function dive($node, &$document, $callback_func = null )
 				// leaving paragraph node, do any entity recognition here
 				if ($callback_func != '')
 				{
-					$callback_func($document);
+					$callback_func($document, $callback_parameters);
 				}	
 				break;
 			
