@@ -65,7 +65,7 @@ Given a file with one or more pdfmarks we can add them to the source PDF using t
 gs -sDEVICE=pdfwrite -sOutputFile=output.pdf -dPDFSETTINGS=/prepress -dNOPAUSE -dBATCH source.pdf pdfmarks.txt
 ```
 
-The `-dNOPAUSE -dBATCH` flags mean the command runs entire in batch mode, otherwise the user is prompted to process each page.
+The `-dNOPAUSE -dBATCH` flags mean the command runs entirely in batch mode, otherwise the user is prompted to process each page.
 
 
 ## PDF.JS
