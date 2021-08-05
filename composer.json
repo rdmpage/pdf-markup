@@ -1,0 +1,12 @@
+{
+    "name": "rpage/pdf-markup",
+    "require": {
+        "yetanotherape/diff-match-patch": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Roderic Page",
+            "email": "rdmpage@gmail.com"
+        }
+    ]
+}
