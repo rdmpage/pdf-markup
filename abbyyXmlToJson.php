@@ -4,6 +4,8 @@ error_reporting(E_ALL);
 
 // Convert ABBYY XML to OCR JSON
 
+// extract possible figures
+
 require_once (dirname(__FILE__) . '/spatial.php');
 
 /*
@@ -24,7 +26,15 @@ else
 */
 
 $filename = 'acta-arachnologica-57-001-043-045_abbyy.xml';
-$output_filename = basename($filename, '.xml') . '.json';
+$filename = 'biostor-147723_abbyy.xml';
+$filename = 'annales-zoologici-47-215-241_abbyy.xml';
+
+
+$output_filename 	= basename($filename, '.xml') . '.json';
+
+$archive 			= basename($filename, '_abbyy.xml');
+$jp2_prefix 		= $archive . '_jp2';
+
 
 
 $obj = new stdclass;
@@ -32,6 +42,8 @@ $obj = new stdclass;
 $obj = new stdclass;
 $obj->pages = array();
 
+
+$image_counter = 1;
 
 $xml = file_get_contents($filename);
 				
@@ -111,321 +123,212 @@ foreach($pages as $xml_page)
 		{
 			$image_obj = new stdclass;
 			$image_obj->bbox = new BBox(
-			$attributes['l'], 
-			$attributes['t'],
-			$attributes['r'],
-			$attributes['b']
+				$attributes['l'], 
+				$attributes['t'],
+				$attributes['r'],
+				$attributes['b']
 			);
-		
-			$page->images[] = $image_obj;
-		
+			
+			$image_obj->href = 'image-' . $image_counter++ . '.jpeg';
+
+			$page->images[] = $image_obj;		
 		}
 		
 		
 		if ($block->type == 'table')
 		{
 			// huh?
+			$table_obj = new stdclass;
+			$table_obj->bbox = new BBox(
+			$attributes['l'], 
+			$attributes['t'],
+			$attributes['r'],
+			$attributes['b']
+			);
+		
+			$page->tables[] = $table_obj;
+			
 		}
 
 		if ($block->type == 'text')
 		{		
-			$b = new stdclass;
-			$b->type = 'block';
-			$b->bbox = new BBox($page->width, $page->height, 0, 0); 
-			$b->tokens = array();
-			$b->text_strings = array();
-			
-			// Get lines of text
-			$lines = $xpath->query ('abbyy:text/abbyy:par/abbyy:line', $block);
-		
-			foreach($lines as $line)
+			$pars = $xpath->query ('abbyy:text/abbyy:par', $block);
+			foreach ($pars as $par)
 			{
+		
+				$b = new stdclass;
+				$b->type = 'block';
+				$b->bbox = new BBox($page->width, $page->height, 0, 0); 
+				$b->tokens = array();
+				$b->text_strings = array();
 			
-				// coordinates
-				if ($line->hasAttributes()) 
-				{ 
-					$attributes = array();
-					$attrs = $line->attributes; 
+				// Get lines of text
+				$lines = $xpath->query ('abbyy:line', $par);
 		
-					foreach ($attrs as $i => $attr)
-					{
-						$attributes[$attr->name] = $attr->value; 
-					}
-				}
-				
-				$text = new stdclass;
-				$text->type = 'text';
-	
-				$text->id = $line_counter++;
-	
-				$text->bbox = new BBox(
-					$attributes['l'], 
-					$attributes['t'],
-					$attributes['r'],
-					$attributes['b']
-					);
-		
-				$b->bbox->merge($text->bbox);
-				
-				// text
-				$text->tokens = array();
-								
-				$formattings = $xpath->query ('abbyy:formatting', $line);
-				foreach($formattings as $formatting)
+				foreach($lines as $line)
 				{
-				
-					if ($formatting->hasAttributes()) 
+			
+					// coordinates
+					if ($line->hasAttributes()) 
 					{ 
 						$attributes = array();
-						$attrs = $formatting->attributes; 
-			
+						$attrs = $line->attributes; 
+		
 						foreach ($attrs as $i => $attr)
 						{
 							$attributes[$attr->name] = $attr->value; 
 						}
 					}
 				
-					$bold 		= isset($attributes['bold']);
-					$italic 	= isset($attributes['italic']);
-					$font_size 	= $attributes['fs'];
-					$font_name 	= $attributes['ff'];
-					
-					// pts to pixels
-					$font_size *= $page->dpi / 72; 
+					$text = new stdclass;
+					$text->type = 'text';
+	
+					$text->id = $line_counter++;
+	
+					$text->bbox = new BBox(
+						$attributes['l'], 
+						$attributes['t'],
+						$attributes['r'],
+						$attributes['b']
+						);
+		
+					$b->bbox->merge($text->bbox);
 				
-					$nc = $xpath->query ('abbyy:charParams', $formatting);
-					
-					$token = null;
-					
-					$word = array();
-					
-					foreach($nc as $n)
+					// text
+					$text->tokens = array();
+								
+					$formattings = $xpath->query ('abbyy:formatting', $line);
+					foreach($formattings as $formatting)
 					{
-						// coordinates
-						if ($n->hasAttributes()) 
+				
+						if ($formatting->hasAttributes()) 
 						{ 
 							$attributes = array();
-							$attrs = $n->attributes; 
+							$attrs = $formatting->attributes; 
 			
 							foreach ($attrs as $i => $attr)
 							{
 								$attributes[$attr->name] = $attr->value; 
 							}
 						}
-						
-						$char_box = new BBox(
-							$attributes['l'], 
-							$attributes['t'],
-							$attributes['r'],
-							$attributes['b']
-							);			
+				
+						$bold 		= isset($attributes['bold']);
+						$italic 	= isset($attributes['italic']);
+						$font_size 	= $attributes['fs'];
+						$font_name 	= $attributes['ff'];
 					
-						// If no token create one
-						if ($token == null)					
+						// pts to pixels
+						$font_size *= $page->dpi / 72; 
+				
+						$nc = $xpath->query ('abbyy:charParams', $formatting);
+					
+						$token = null;
+					
+						$word = array();
+					
+						foreach($nc as $n)
 						{
-							$token = new stdclass;
-							$token->type = 'token';
+							// coordinates
+							if ($n->hasAttributes()) 
+							{ 
+								$attributes = array();
+								$attrs = $n->attributes; 
+			
+								foreach ($attrs as $i => $attr)
+								{
+									$attributes[$attr->name] = $attr->value; 
+								}
+							}
+						
+							if (0)
+							{
+								// take coordinates for this character 
+								$char_box = new BBox(
+									$attributes['l'], 
+									$attributes['t'],
+									$attributes['r'],
+									$attributes['b']
+									);	
+							}
+							else
+							{
+								// use line top and bottom to ensure smooth display of text
+								$char_box = new BBox(
+									$attributes['l'], 
+									$text->bbox->miny,
+									$attributes['r'],
+									$text->bbox->maxy
+									);			
+							}		
+					
+							// If no token create one
+							if ($token == null)					
+							{
+								$token = new stdclass;
+								$token->type = 'token';
 				
-							$token->bbox = new BBox($page->width, $page->height, 0, 0); 			
+								$token->bbox = new BBox($page->width, $page->height, 0, 0); 			
 				
-							$token->bold 		= $bold;
-							$token->italic		= $italic;
-							$token->font_size 	= $font_size;
-							$token->font_name 	= $font_name;	
+								$token->bold 		= $bold;
+								$token->italic		= $italic;
+								$token->font_size 	= $font_size;
+								$token->font_name 	= $font_name;	
 							
-							$token->word = array();								
-						}
-						
-						$char = $n->firstChild->nodeValue;
-												
-						if ($char == ' ' && $token)
-						{
-							// if space then we have finished a word
-						
-							$token->text = join('', $token->word);
-							$text->tokens[] = $token;	
-							$b->tokens[] = $token;		
-				
-							$b->text_strings[] = $token->text;
-						
-							$token = null;
-						
-						
-						}
-						else
-						{
-							// grow word and bounding box
-							$token->word[] = $char;
-							$token->bbox->merge($char_box);
-						}
-						
-					}
-					
-					if ($token)
-					{
-							$token->text = join('', $token->word);
-							$text->tokens[] = $token;	
-							$b->tokens[] = $token;		
-				
-							$b->text_strings[] = $token->text;
-						
-							$token = null;
-					
-					}
-						
-						
-					
-				
-					/*
-					foreach($nc as $n)
-					{
-						// coordinates
-						if ($n->hasAttributes()) 
-						{ 
-							$attributes = array();
-							$attrs = $n->attributes; 
-			
-							foreach ($attrs as $i => $attr)
-							{
-								$attributes[$attr->name] = $attr->value; 
+								$token->word = array();								
 							}
+						
+							$char = $n->firstChild->nodeValue;
+												
+							if ($char == ' ' && $token)
+							{
+								// if space then we have finished a word
+						
+								$token->text = join('', $token->word);
+								$text->tokens[] = $token;	
+								$b->tokens[] = $token;		
+				
+								$b->text_strings[] = $token->text;
+						
+								$token = null;
+						
+						
+							}
+							else
+							{
+								// grow word and bounding box
+								$token->word[] = $char;
+								$token->bbox->merge($char_box);
+							}
+						
 						}
-		
-						$token = new stdclass;
-						$token->type = 'token';
+					
+						if ($token)
+						{
+								$token->text = join('', $token->word);
+								$text->tokens[] = $token;	
+								$b->tokens[] = $token;		
 				
-						$token->bbox = new BBox(
-							$attributes['l'], 
-							$attributes['t'],
-							$attributes['r'],
-							$attributes['b']
-							);				
-				
-						$token->bold 		= $bold;
-						$token->italic		= $italic;
-						$token->font_size 	= $font_size;
-						$token->font_name 	= $font_name;			
-						$token->text 		= $n->firstChild->nodeValue;
-				
-						//$token->rotation 	= $attributes['rotation'] == '1' ? true : false;
-						//$token->angle 		= $attributes['angle'];
+								$b->text_strings[] = $token->text;
 						
-						$text->tokens[] = $token;	
-						$b->tokens[] = $token;		
+								$token = null;
+					
+						}
+			
 				
-						$b->text_strings[] = $token->text;
-					}	
-					*/				
-				
-				}
-			
-			}
-			
-			// Grow the page bounding box
-			$page->text_bbox->merge($b->bbox);
-		
-			// Get text for this block and cleanup
-			$b->text = join(' ', $b->text_strings);
-			unset($b->text_strings);			
-			
-			// Add block to this page
-			$page->blocks[] = $b;
-		
-		
-/*
-		$b = new stdclass;
-		$b->type = 'block';
-		$b->bbox = new BBox($page->width, $page->height, 0, 0); 
-		$b->tokens = array();
-		$b->text_strings = array();
-		
-		// Get lines of text
-		$lines = $xpath->query ('TEXT', $block);
-		
-		foreach($lines as $line)
-		{
-			// coordinates
-			if ($line->hasAttributes()) 
-			{ 
-				$attributes = array();
-				$attrs = $line->attributes; 
-		
-				foreach ($attrs as $i => $attr)
-				{
-					$attributes[$attr->name] = $attr->value; 
-				}
-			}
-	
-			$text = new stdclass;
-			$text->type = 'text';
-	
-			$text->id = $line_counter++;
-	
-			$text->bbox = new BBox(
-				$attributes['x'], 
-				$attributes['y'],
-				$attributes['x'] + $attributes['width'],
-				$attributes['y'] + $attributes['height']
-				);
-		
-			$b->bbox->merge($text->bbox);
-	
-			// text	
-			$text->tokens = array();
-
-			$nc = $xpath->query ('TOKEN', $line);
-				
-			foreach($nc as $n)
-			{
-				// coordinates
-				if ($n->hasAttributes()) 
-				{ 
-					$attributes = array();
-					$attrs = $n->attributes; 
-			
-					foreach ($attrs as $i => $attr)
-					{
-						$attributes[$attr->name] = $attr->value; 
 					}
-				}
-		
-				$token = new stdclass;
-				$token->type = 'token';
-				
-				$token->bbox = new BBox(
-					$attributes['x'], 
-					$attributes['y'],
-					$attributes['x'] + $attributes['width'],
-					$attributes['y'] + $attributes['height']
-					);				
-				
-				$token->bold 		= $attributes['bold'] == 'yes' ? true : false;
-				$token->italic		= $attributes['italic'] == 'yes' ? true : false;
-				$token->font_size 	= $attributes['font-size'];
-				$token->font_name 	= $attributes['font-name'];			
-				$token->text 		= $n->firstChild->nodeValue;
-				
-				$token->rotation 	= $attributes['rotation'] == '1' ? true : false;
-				$token->angle 		= $attributes['angle'];
-						
-				$text->tokens[] = $token;	
-				$b->tokens[] = $token;		
-				
-				$b->text_strings[] = $token->text;
-			}	
 			
-		}
+				}
+			
+				// Grow the page bounding box
+				$page->text_bbox->merge($b->bbox);
 		
-		// Grow the page bounding box
-		$page->text_bbox->merge($b->bbox);
-		
-		// Get text for this block and cleanup
-		$b->text = join(' ', $b->text_strings);
-		unset($b->text_strings);
-		
-		// Add block to this page
-		$page->blocks[] = $b;
-*/					
+				// Get text for this block and cleanup
+				$b->text = join(' ', $b->text_strings);
+				unset($b->text_strings);			
+			
+				// Add block to this page
+				$page->blocks[] = $b;
+			}
 		}
 	
 	
@@ -438,6 +341,42 @@ print_r($obj);
 
 file_put_contents($output_filename, json_encode($obj, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 
+// extract images
+
+$n = count($obj->pages);
+for ($i = 0; $i < $n; $i++)
+{
+	$page_number = $i + 1;
+	
+	if (isset($obj->pages[$i]->images))
+	{
+		foreach ($obj->pages[$i]->images as $image)
+		{
+			$fragment = 
+				($image->bbox->maxx - $image->bbox->minx) 
+				. 'x' 
+				. ($image->bbox->maxy - $image->bbox->miny) 				
+				. '+'
+				. $image->bbox->minx
+				. '+'
+				. $image->bbox->miny;
+				
+		
+			$jp2_filename = $jp2_prefix . '/' . $archive . '_' . str_pad($i, 4, '0', STR_PAD_LEFT) . '.jp2';
+
+			$image_filename  = $image->href;
+
+			$command = 'convert -extract ' . $fragment . ' ' . $jp2_filename . ' ' . $image_filename;
+			echo $command . "\n";
+			
+			system($command);
+		
+		}
+	
+	
+	}
+
+}
 
 
 ?>
