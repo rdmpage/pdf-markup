@@ -51,9 +51,17 @@ $html .= '<html>
 		/* filter: invert(1); */
 	}
 	
+	/* table */
+	.table {
+		position:absolute;
+		background-color:blue;
+	}
+	
+	
 	/* visible text */
 	.token {
 		position:absolute;
+		/* background-color:green; */
 	}	
 	
 	.token-text {
@@ -75,11 +83,12 @@ $html .= '<html>
         overflow: hidden;
         padding: 0px;
         
+                
         /* experiments with scaling */
         
         /* note that we translate first then scale, which makes it easier to compute translate */
-        transform: translate(0) scale(1, 1);
-        /* transform:translate(25%) scale(0.5,0.5) ; */
+        /*transform: translate(0) scale(1, 1); */
+        /* transform:translate(25%) scale(0.3,0.3) ; */
         /* transform:translate(15%) scale(0.7,0.7) ; */
         transform-origin: 0 0;
         margin: 0px;
@@ -92,6 +101,11 @@ $html .= '<div style="width:100%;height:100%;overflow-y:auto;overflow-x:auto;tex
 $html .= '<div id="viewport">' . "\n";
 
 
+$page_width = 700;
+
+$scale = $page_width / ($obj->pages[0]->bbox->maxx - $obj->pages[0]->bbox->minx);
+
+
 foreach ($obj->pages as $page)
 {
 
@@ -100,6 +114,11 @@ foreach ($obj->pages as $page)
 	$y = $page->bbox->miny;
 	$w = $page->bbox->maxx - $page->bbox->minx;
 	$h = $page->bbox->maxy - $page->bbox->miny;
+	
+	$x *= $scale;
+	$y *= $scale;
+	$w *= $scale;
+	$h *= $scale;
 	
 	
 	$html .= '<div class="page" style="width:' . $w . 'px;height:' . $h . 'px;">'  . "\n";
@@ -113,7 +132,12 @@ foreach ($obj->pages as $page)
 			$y = $image->bbox->miny;
 			$w = $image->bbox->maxx - $image->bbox->minx;
 			$h = $image->bbox->maxy - $image->bbox->miny;
-		
+			
+			$x *= $scale;
+			$y *= $scale;
+			$w *= $scale;
+			$h *= $scale;
+				
 			// ignore block x=0, y=0 as this is the whole page(?)
 			if (($x != 0) && ($y != 0))
 			{
@@ -135,6 +159,32 @@ foreach ($obj->pages as $page)
 		
 	}
 	
+	// tables (from ABBYY OCR)
+	if (isset($page->tables))
+	{
+		foreach ($page->tables as $table)
+		{
+			$x = $table->bbox->minx;
+			$y = $table->bbox->miny;
+			$w = $table->bbox->maxx - $table->bbox->minx;
+			$h = $table->bbox->maxy - $table->bbox->miny;
+			
+			$x *= $scale;
+			$y *= $scale;
+			$w *= $scale;
+			$h *= $scale;
+			
+	
+			$html .= '<div class="table" style="' 
+				. 'left:' 	. $x . 'px;'
+				. 'top:' 	. $y . 'px;'
+				. 'width:' 	. $w . 'px;'
+				. 'height:' . $h . 'px;'
+				. '">'  . "\n";
+			$html .= '</div>'  . "\n";				
+		}
+	}
+	
 	foreach ($page->blocks as $block)
 	{
 		foreach ($block->tokens as $token)
@@ -144,6 +194,11 @@ foreach ($obj->pages as $page)
 			$w = $token->bbox->maxx - $token->bbox->minx;
 			$h = $token->bbox->maxy - $token->bbox->miny;
 			
+			$x *= $scale;
+			$y *= $scale;
+			$w *= $scale;
+			$h *= $scale;
+
 			$styles = array();
 			
 			if ($token->rotation)
@@ -165,7 +220,15 @@ foreach ($obj->pages as $page)
 				$styles[] = 'font-style:italic';
 			}
 			
-			$styles[] = 'font-size:' . $token->font_size . 'px';
+			$styles[] = 'font-size:' . ($token->font_size * $scale) . 'px';
+			
+			/*
+			if ($h < $token->font_size)
+			{
+				$styles[] = 'position:absolute;';
+				$styles[] = 'top:' . ($h - $token->font_size) . 'px;';
+			}
+			*/
 					
 			$html .= '<div class="token" style="' 
 				. 'left:' . $x . 'px;'
