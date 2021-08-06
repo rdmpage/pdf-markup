@@ -17,6 +17,10 @@ There is a `Makefile` that will run these scripts for all PDFs in this folder.
 
 `pdfXmlToJson.php` takes the XML output from `pdftoxml` and converts it a JSON format that describes the tokens and their location on the page. This JSON can then be used to generate other outputs, mostly useful for checking that the PDF extraction has worked as expected. `jsonToHtmlLayout.php` makes a weak attempt to output HTML that is close to the original PDF, `pdfToImages.php` tends to look better by outputting each page as an image and overlaying text on that.
 
+## ABBYY
+
+Adding code to process ABBYY XML OCR files from Internet Archive. These have different features to PDFTOXML, and enable us to extract images from OCR PDFs. They also have more semantic markup, including using styles to indicate whether something is a caption. At the same time, the algorithms can sometimes split complex figures into pieces, so will need to be clever about putting those back together, perhaps by finding a bounding box for a set of images.
+
 ## Markup
 
 My approach to markup is to do the following:
