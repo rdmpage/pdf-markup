@@ -4,3 +4,11 @@
 ignore
 
 junk
+
+/vendor/
+
+/grobid
+
+/bhl-page-search/cache
+
+/to do
